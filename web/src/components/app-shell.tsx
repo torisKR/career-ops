@@ -7,6 +7,8 @@ import { CoMark } from "@/components/co-mark";
 import { AssistantConsole } from "@/components/assistant-console";
 import { MobileNav } from "@/components/mobile-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageToggle } from "@/components/language-toggle";
+import { LanguageProvider, useI18n } from "@/components/language-provider";
 import { BackToTop } from "@/components/back-to-top";
 import { JobsProvider } from "@/components/jobs/job-store";
 import { PipelineProvider } from "@/components/pipeline/pipeline-provider";
@@ -19,67 +21,81 @@ import { UsageMeter } from "@/components/usage-meter";
 import { instrumentSerif } from "@/lib/fonts";
 import { NAV_ITEMS, isActivePath } from "@/lib/nav-items";
 
+function SidebarNavigation({ pathname }: { pathname: string }) {
+  const { t } = useI18n();
+  return (
+    <nav className="flex flex-col gap-1">
+      {NAV_ITEMS.map(({ href, label, labelKey, icon: Icon, chip }) => {
+        const active = isActivePath(href, pathname);
+        const localizedLabel = t(labelKey) || label;
+        return (
+          <Link
+            key={href}
+            href={href}
+            className={cn(
+              "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+              active
+                ? "bg-brand-soft text-brand-text font-medium"
+                : "text-muted hover:bg-surface-hover hover:text-foreground",
+            )}
+          >
+            <Icon className="size-4 shrink-0" />
+            <span className="truncate">{localizedLabel}</span>
+            {chip && (
+              <span className="ml-auto rounded-full border border-brand/30 bg-brand-soft px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-brand-text">
+                {chip}
+              </span>
+            )}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   return (
-    <JobsProvider>
-      <PipelineProvider>
-      <ApplyProvider>
-      <ExploreProvider>
-      <MobileNav />
-      <div className="flex min-h-screen">
-        <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col overflow-y-auto border-r border-border bg-surface/30 p-4 md:flex">
-          <Link href="/" className="mb-8 flex items-center gap-2.5 px-1">
-            <CoMark size={32} />
-            <span className={`${instrumentSerif.className} relative -top-px text-2xl font-normal tracking-tight text-landing`}>
-              career-ops
-            </span>
-          </Link>
-          <nav className="flex flex-col gap-1">
-            {NAV_ITEMS.map(({ href, label, icon: Icon, chip }) => {
-              const active = isActivePath(href, pathname);
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-                    active
-                      ? "bg-brand-soft text-brand-text"
-                      : "text-muted hover:bg-surface-hover hover:text-foreground",
-                  )}
-                >
-                  <Icon className="size-4" />
-                  {label}
-                  {chip && (
-                    <span className="ml-auto rounded-full border border-brand/30 bg-brand-soft px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-brand-text">
-                      {chip}
+    <LanguageProvider>
+      <JobsProvider>
+        <PipelineProvider>
+          <ApplyProvider>
+            <ExploreProvider>
+              <MobileNav />
+              <div className="flex min-h-screen">
+                <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col overflow-y-auto border-r border-border bg-surface/30 p-4 md:flex">
+                  <Link href="/" className="mb-8 flex items-center gap-2.5 px-1">
+                    <CoMark size={32} />
+                    <span className={`${instrumentSerif.className} relative -top-px text-2xl font-normal tracking-tight text-landing`}>
+                      career-ops
                     </span>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+                  </Link>
 
-          <WorkerPills />
+                  <SidebarNavigation pathname={pathname} />
 
-          <div className="mt-auto space-y-3 pt-4">
-            <UsageMeter />
-            <div className="flex items-center justify-between px-1">
-              <span className={`${instrumentSerif.className} text-sm text-faint`}>local-first · v0</span>
-              <ThemeToggle />
-            </div>
-          </div>
-        </aside>
-        <main className="flex-1 overflow-x-hidden">{children}</main>
-        <AssistantConsole />
-        <BackToTop />
-        <FirstScoreView />
-        <BetaBanner />
-      </div>
-      </ExploreProvider>
-      </ApplyProvider>
-      </PipelineProvider>
-    </JobsProvider>
+                  <WorkerPills />
+
+                  <div className="mt-auto space-y-3 pt-4">
+                    <UsageMeter />
+                    <div className="flex items-center justify-between px-1">
+                      <span className={`${instrumentSerif.className} text-sm text-faint`}>local-first · v0</span>
+                      <div className="flex items-center gap-1">
+                        <LanguageToggle />
+                        <ThemeToggle />
+                      </div>
+                    </div>
+                  </div>
+                </aside>
+                <main className="flex-1 overflow-x-hidden">{children}</main>
+                <AssistantConsole />
+                <BackToTop />
+                <FirstScoreView />
+                <BetaBanner />
+              </div>
+            </ExploreProvider>
+          </ApplyProvider>
+        </PipelineProvider>
+      </JobsProvider>
+    </LanguageProvider>
   );
 }

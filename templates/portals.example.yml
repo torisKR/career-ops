@@ -1892,6 +1892,12 @@ search_queries:
 #   max_pages: 120                        # optional page cap (default 120, max 500)
 #   enabled: true
 #
+# - name: Wanted                          # South Korean tech & startup board (wanted.co.kr)
+#   provider: wanted
+#   careers_url: https://www.wanted.co.kr/wdlist/518  # 518 is 개발 (Software Development)
+#   max_pages: 50                         # optional page cap (default 50, max 200)
+#   enabled: true
+#
 # Comeet needs the full careers-api URL (it carries a per-tenant token that a
 # branded careers page does not expose), so set it via the api: field — e.g.:
 #

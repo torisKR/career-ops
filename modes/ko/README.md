@@ -35,18 +35,20 @@ language:
 
 첫 세션에서 Claude에게 이 설정을 확인하라고 알려주세요. 예: "`profile.yml`에 `language.modes_dir`를 설정해뒀어." 이후 Claude는 자동으로 한국어 모드를 사용합니다.
 
-## 어떤 모드가 번역되어 있나요?
+## 어떤 모드가 지원되나요?
 
-이번 첫 버전은 영향도가 가장 큰 네 가지 모드를 다룹니다.
+한국 테크 채용 시장에 최적화된 주요 모드들을 제공합니다.
 
-| 파일 | 번역 기준 | 역할 |
+| 파일 | 번역/기반 기준 | 역할 |
 |---------|----------------|------|
 | `_shared.md` | `modes/_shared.md` (EN) | 공통 컨텍스트, archetype, 전역 규칙, 한국 채용 시장 특화 맥락 |
 | `gonggo.md` | `modes/oferta.md` (ES) | 채용 공고 전체 평가 (블록 A-F) |
 | `jiwon.md` | `modes/apply.md` (EN) | 지원서 입력 폼을 채우는 live assistant |
 | `pipeline.md` | `modes/pipeline.md` (ES) | 수집한 채용 공고 URL inbox / Second Brain |
+| `cover.md` | `modes/cover.md` (EN) | 한국형 자기소개서 및 커버레터 생성기 |
+| `interview.md` | `modes/interview.md` (EN) | 대화형 온보딩 인터뷰 및 기업별 실전 면접 대비 (기술/인성/역질문) |
 
-다른 모드(`scan`, `batch`, `pdf`, `tracker`, `auto-pipeline`, `deep`, `contacto`, `ofertas`, `project`, `training`)는 기존 EN/ES 모드를 그대로 사용합니다. 해당 파일들은 주로 tooling, 경로, 명령어 중심이라 언어와 독립적으로 동작합니다.
+다른 모드(`scan`, `batch`, `pdf`, `tracker`, `auto-pipeline`, `deep`, `contacto`, `ofertas`, `project`, `training`)는 기본 모드를 사용합니다. 해당 파일들은 주로 tooling, 경로, 명령어 중심이라 언어와 독립적으로 동작합니다.
 
 ## 영어로 유지하는 것
 

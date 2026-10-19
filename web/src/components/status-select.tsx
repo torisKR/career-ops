@@ -4,11 +4,24 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
 import { CANONICAL_STATES } from "@/lib/format";
+import { cn } from "@/lib/cn";
 
 // Status writeback control. Updates the existing tracker row (status cell) via
 // /api/status — never adds rows. Reverts on failure; confirms with the
 // terminal-popup animation.
-export function StatusSelect({ n, current }: { n: string; current: string }) {
+export function StatusSelect({
+  n,
+  current,
+  hideLabel = false,
+  size = "md",
+  className,
+}: {
+  n: string;
+  current: string;
+  hideLabel?: boolean;
+  size?: "sm" | "md";
+  className?: string;
+}) {
   const [status, setStatus] = useState(current);
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -38,13 +51,18 @@ export function StatusSelect({ n, current }: { n: string; current: string }) {
 
   const known = (CANONICAL_STATES as readonly string[]).includes(status);
   return (
-    <span className="inline-flex items-center gap-2">
-      <label className="text-xs text-faint">status</label>
+    <span className={cn("inline-flex items-center gap-1.5", className)}>
+      {!hideLabel && <label className="text-xs text-faint">status</label>}
       <select
         value={status}
         onChange={onChange}
         disabled={busy}
-        className="rounded-md border border-border bg-surface px-2.5 py-1 text-sm text-foreground outline-none transition-colors focus:border-brand/50 disabled:opacity-50 max-sm:min-h-[44px]"
+        className={cn(
+          "rounded-md border border-border bg-surface text-foreground outline-none transition-colors focus:border-brand/50 disabled:opacity-50",
+          size === "sm"
+            ? "px-2 py-0.5 text-xs font-medium"
+            : "px-2.5 py-1 text-sm max-sm:min-h-[44px]",
+        )}
       >
         {!known && <option value={status}>{status}</option>}
         {CANONICAL_STATES.map((s) => (

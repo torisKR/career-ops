@@ -7,6 +7,8 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { CoMark } from "@/components/co-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageToggle } from "@/components/language-toggle";
+import { useI18n } from "@/components/language-provider";
 import { WorkerPills } from "@/components/jobs/worker-pills";
 import { UsageMeter } from "@/components/usage-meter";
 import { instrumentSerif } from "@/lib/fonts";
@@ -149,31 +151,7 @@ export function MobileNav() {
           </button>
         </div>
 
-        <nav className="flex flex-col gap-1 px-3">
-          {NAV_ITEMS.map(({ href, label, icon: Icon, chip }) => {
-            const active = isActivePath(href, pathname);
-            return (
-              <Link
-                key={href}
-                href={href}
-                onClick={() => setOpen(false)}
-                aria-current={active ? "page" : undefined}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-3 text-[15px] transition-colors",
-                  active ? "bg-brand-soft text-brand-text" : "text-muted hover:bg-surface-hover hover:text-foreground",
-                )}
-              >
-                <Icon className="size-5" />
-                {label}
-                {chip && (
-                  <span className="ml-auto rounded-full border border-brand/30 bg-brand-soft px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-brand-text">
-                    {chip}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+        <MobileNavLinks onSelect={() => setOpen(false)} pathname={pathname} />
 
         <div className="px-3">
           <WorkerPills />
@@ -183,10 +161,45 @@ export function MobileNav() {
           <UsageMeter />
           <div className="flex items-center justify-between">
             <span className={`${instrumentSerif.className} text-sm text-faint`}>local-first · v0</span>
-            <ThemeToggle />
+            <div className="flex items-center gap-1">
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </aside>
     </>
+  );
+}
+
+function MobileNavLinks({ onSelect, pathname }: { onSelect: () => void; pathname: string }) {
+  const { t } = useI18n();
+  return (
+    <nav className="flex flex-col gap-1 px-3">
+      {NAV_ITEMS.map(({ href, label, labelKey, icon: Icon, chip }) => {
+        const active = isActivePath(href, pathname);
+        const localizedLabel = t(labelKey) || label;
+        return (
+          <Link
+            key={href}
+            href={href}
+            onClick={onSelect}
+            aria-current={active ? "page" : undefined}
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-3 text-[15px] transition-colors",
+              active ? "bg-brand-soft text-brand-text font-medium" : "text-muted hover:bg-surface-hover hover:text-foreground",
+            )}
+          >
+            <Icon className="size-5 shrink-0" />
+            <span className="truncate">{localizedLabel}</span>
+            {chip && (
+              <span className="ml-auto rounded-full border border-brand/30 bg-brand-soft px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-brand-text">
+                {chip}
+              </span>
+            )}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
