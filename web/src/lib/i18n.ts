@@ -67,6 +67,16 @@ export interface Translations {
   score_tier_good: string;
   score_tier_moderate: string;
 
+  // Report & Toolkit Tabs
+  report_tab_overview: string;
+  report_tab_keywords: string;
+  report_tab_interview: string;
+  report_tab_cover: string;
+  report_tab_negotiation: string;
+  drawer_btn_interview: string;
+  drawer_btn_cover: string;
+  drawer_btn_keywords: string;
+
   // Tabs & Stages
   tab_inbox: string;
   tab_all: string;
@@ -174,6 +184,15 @@ export const DICTIONARY: Record<Locale, Translations> = {
     score_tier_good: "보통 적합도",
     score_tier_moderate: "기준 미달 / 검토 필요",
 
+    report_tab_overview: "평가 리포트",
+    report_tab_keywords: "ATS 키워드 분석",
+    report_tab_interview: "실전 면접 허브",
+    report_tab_cover: "자소서 스튜디오",
+    report_tab_negotiation: "처우 협상",
+    drawer_btn_interview: "면접 준비",
+    drawer_btn_cover: "자소서 작성",
+    drawer_btn_keywords: "키워드 분석",
+
     tab_inbox: "수집함",
     tab_all: "전체",
     tab_evaluated: "평가완료",
@@ -273,6 +292,15 @@ export const DICTIONARY: Record<Locale, Translations> = {
     score_tier_strong: "Strong Match",
     score_tier_good: "Good Fit",
     score_tier_moderate: "Moderate / Review Needed",
+
+    report_tab_overview: "Evaluation Report",
+    report_tab_keywords: "ATS Keywords",
+    report_tab_interview: "Interview Prep",
+    report_tab_cover: "Cover Letter",
+    report_tab_negotiation: "Negotiation",
+    drawer_btn_interview: "Interview Prep",
+    drawer_btn_cover: "Cover Letter",
+    drawer_btn_keywords: "ATS Keywords",
 
     tab_inbox: "INBOX",
     tab_all: "ALL",

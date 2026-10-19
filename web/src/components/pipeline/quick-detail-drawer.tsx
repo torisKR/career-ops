@@ -14,6 +14,7 @@ import {
   Sparkles,
   ArrowRight,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import type { Application } from "@/lib/career-ops";
 import { CompanyLogo } from "@/components/company-logo";
@@ -312,8 +313,44 @@ export function QuickDetailDrawer({
               </div>
             </div>
 
+            {/* Quick Hiring Success Toolkit */}
+            <div className="mt-5 rounded-xl border border-border/80 bg-surface/50 p-3">
+              <span className="text-[10px] font-bold tracking-wider text-faint uppercase">
+                {locale === "ko" ? "채용 성공 도구 (Quick Tools)" : "Hiring Success Toolkit"}
+              </span>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                <Link
+                  href={`/pipeline/${app.n}?tab=keywords`}
+                  className="flex flex-col items-center justify-center rounded-lg border border-border/60 bg-surface p-2 text-center transition-colors hover:border-brand/40 hover:bg-surface-hover"
+                >
+                  <Sparkles className="size-3.5 text-brand" />
+                  <span className="mt-1 text-[11px] font-medium text-foreground">
+                    {t("drawer_btn_keywords")}
+                  </span>
+                </Link>
+                <Link
+                  href={`/pipeline/${app.n}?tab=interview`}
+                  className="flex flex-col items-center justify-center rounded-lg border border-border/60 bg-surface p-2 text-center transition-colors hover:border-brand/40 hover:bg-surface-hover"
+                >
+                  <Users className="size-3.5 text-violet-500" />
+                  <span className="mt-1 text-[11px] font-medium text-foreground">
+                    {t("drawer_btn_interview")}
+                  </span>
+                </Link>
+                <Link
+                  href={`/pipeline/${app.n}?tab=cover`}
+                  className="flex flex-col items-center justify-center rounded-lg border border-border/60 bg-surface p-2 text-center transition-colors hover:border-brand/40 hover:bg-surface-hover"
+                >
+                  <FileText className="size-3.5 text-sky-500" />
+                  <span className="mt-1 text-[11px] font-medium text-foreground">
+                    {t("drawer_btn_cover")}
+                  </span>
+                </Link>
+              </div>
+            </div>
+
             {/* Action Buttons Footer */}
-            <div className="mt-6 border-t border-border/80 pt-4">
+            <div className="mt-4 border-t border-border/80 pt-4">
               <div className="flex flex-col gap-2">
                 <Link
                   href={`/pipeline/${app.n}`}
